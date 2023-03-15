@@ -1,6 +1,8 @@
 package com.if4a.footballplayer;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +16,14 @@ import java.util.ArrayList;
 public class AdapterFootballPlayer extends RecyclerView.Adapter<AdapterFootballPlayer.ViewHolderPlayer> {
 
     private Context ctx;
-    private ArrayList arrNama, arrNomor, arrKlub;
+    private ArrayList arrNama, arrNomor, arrKlub, arrId;
 
-    public AdapterFootballPlayer(Context ctx, ArrayList arrNama, ArrayList arrNomor, ArrayList arrKlub) {
+    public AdapterFootballPlayer(Context ctx,  ArrayList arrId, ArrayList arrNama, ArrayList arrNomor, ArrayList arrKlub) {
         this.ctx = ctx;
         this.arrNama = arrNama;
         this.arrNomor = arrNomor;
         this.arrKlub = arrKlub;
+        this.arrId = arrId;
     }
 
     @NonNull
@@ -37,6 +40,7 @@ public class AdapterFootballPlayer extends RecyclerView.Adapter<AdapterFootballP
         holder.tvNama.setText(arrNama.get(position).toString());
         holder.tvNomor.setText(arrNomor.get(position).toString());
         holder.tvKlub.setText(arrKlub.get(position).toString());
+        holder.tvId.setText(arrId.get(position).toString());
     }
 
     @Override
@@ -46,14 +50,41 @@ public class AdapterFootballPlayer extends RecyclerView.Adapter<AdapterFootballP
 
     public class ViewHolderPlayer extends RecyclerView.ViewHolder{
 
-        private TextView tvNama, tvNomor, tvKlub;
+        private TextView tvNama, tvNomor, tvKlub, tvId;
 
         public ViewHolderPlayer (@NonNull View itemView) {
             super(itemView);
+
+            tvId = itemView.findViewById(R.id.tv_id);
             tvNama = itemView.findViewById(R.id.tv_namaPemain);
             tvKlub = itemView.findViewById(R.id.tv_klub);
             tvNomor = itemView.findViewById(R.id.tv_nomor);
 
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    AlertDialog.Builder pesan = new AlertDialog.Builder(ctx);
+                    pesan.setTitle("Perhatian");
+                    pesan.setMessage("Anda Memilih " + tvNama.getText().toString() + " Pilih Perintah yang anda inginkan");
+                    pesan.setCancelable(true);
+
+                    pesan.setPositiveButton("Ubah", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    pesan.setNegativeButton("Hapus", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    pesan.show();
+                    return false;
+                }
+            });
 
         }
     }
