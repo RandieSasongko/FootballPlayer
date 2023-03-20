@@ -3,6 +3,7 @@ package com.if4a.footballplayer;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,14 @@ public class AdapterFootballPlayer extends RecyclerView.Adapter<AdapterFootballP
                     pesan.setPositiveButton("Ubah", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Intent varIntent = new Intent(ctx, UbahActivity.class);
+
+                            varIntent.putExtra("varId", tvId.getText().toString());
+                            varIntent.putExtra("varNama", tvNama.getText().toString());
+                            varIntent.putExtra("varKlub", tvKlub.getText().toString());
+                            varIntent.putExtra("varNomor", tvNomor.getText().toString());
+
+                            ctx.startActivity(varIntent);
 
                         }
                     });
